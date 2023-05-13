@@ -18,16 +18,16 @@ const init = async () => {
 
     await server.register(require('@hapi/inert'));
     await server.register(require('@hapi/vision'));
-    await server.register({
-        plugin: require('hapi-mongodb'),
-        options: {
-          uri: 'mongodb://localhost:27017',
-          settings : {
-            useUnifiedTopology: true
-          },
-          decorate: true
-        }
-    });
+    // await server.register({
+    //     plugin: require('hapi-mongodb'),
+    //     options: {
+    //       uri: 'mongodb://localhost:27017/LaFruteria',
+    //       settings : {
+    //         useUnifiedTopology: true,
+    //       },
+    //       decorate: true
+    //     }
+    // });
 
     server.views({
         engines: {
@@ -90,12 +90,12 @@ const init = async () => {
         handler: (request, h) => {
             let index = request.params.id;
             const fruits = ["apple 🍎", "banana 🍌", "pineapple 🍍", "orange 🍊"];
-            return fruits.find(index - 1);
+            return fruits[index - 1];
         },
         options: {
             validate: {
                 params: Joi.object({
-                    id: Joi.number().integer().greater(0)
+                    id: Joi.number().integer().greater(0).less(5)
                 })
             }
         }

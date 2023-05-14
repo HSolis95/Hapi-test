@@ -12,7 +12,7 @@ module.exports = server => {
         handler: (request, h) => h.file('fruits.jpg')
     });
 
-    require('./pages/pages')(server);
+
     require('./fruits/fruits')(server);
 }
 

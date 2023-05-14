@@ -1,7 +1,6 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
-const Joi = require('joi');
 const path = require('path');
 
 const init = async () => {
@@ -38,68 +37,7 @@ const init = async () => {
         isCached: process.env.NODE_ENV === 'production'
     });
 
-    server.route({
-        method: 'GET',
-        path: '/pages/index',
-        handler: function (request, h) {
-
-            return h.view('index');
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/pages/fruits',
-        handler: function (request, h) {
-            const fruits = ["apple 🍎", "banana 🍌", "pineapple 🍍", "orange 🍊"];
-            return h.view('fruits', {
-                fruits
-            });
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/fruits.jpg',
-        handler: function (request, h) {
-
-            return h.file('fruits.jpg');
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-            return 'Hello World!';
-        }
-    });
-
-    server.route({
-        path: '/fruit',
-        method: 'GET',
-        handler: (request, h) => {
-            const fruits = ["apple 🍎", "banana 🍌", "pineapple 🍍", "orange 🍊"];
-            return fruits;
-        }
-    })
-
-    server.route({
-        path: '/fruit/{id}',
-        method: 'GET',
-        handler: (request, h) => {
-            let index = request.params.id;
-            const fruits = ["apple 🍎", "banana 🍌", "pineapple 🍍", "orange 🍊"];
-            return fruits[index - 1];
-        },
-        options: {
-            validate: {
-                params: Joi.object({
-                    id: Joi.number().integer().greater(0).less(5)
-                })
-            }
-        }
-    })
+    require('./routes/index')(server);
 
     await server.start();
     console.log('Server running on %s', server.info.uri);

@@ -1,16 +1,17 @@
+const StoresController = require('../../controllers/stores/stores');
 const Joi = require('joi');
 module.exports = server => {
 
     server.route({
         path: '/fruit',
         method: 'GET',
-        handler: FruitController.GetFruits
+        handler: StoresController.GetStores
     });
 
     server.route({
         path: '/fruit/{id}',
         method: 'GET',
-        handler: FruitController.GetFruit,
+        handler: StoresController.GetStore,
         options: {
             validate: {
                 params: Joi.object({

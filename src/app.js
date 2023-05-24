@@ -38,7 +38,7 @@ const init = async () => {
     });
 
     require('./routes/index')(server);
-    require('./pages/index')(server);
+    require('./pages/pages')(server);
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
